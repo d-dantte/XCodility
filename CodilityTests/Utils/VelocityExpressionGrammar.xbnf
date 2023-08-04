@@ -1,0 +1,7 @@
+﻿# Subset of Velocity
+#
+# NOTE: for non-case-sensitive strings, use s-quote: ', and use d-quote: ", for case sensitive strings
+#
+
+# Expression
+$expression -> +[$root-accessor ?[$get-property-accessor $dot-property-accessor $indexer].* EOF]
