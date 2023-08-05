@@ -58,6 +58,8 @@ namespace CodilityTests
                 .ExtractExpressions(text)
                 .Distinct()
                 .ToList();
+
+            expressions.ForEach(Console.WriteLine);
         }
 
         [TestMethod]
