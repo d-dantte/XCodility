@@ -46,20 +46,35 @@ namespace CodilityTests
             var errors = VelocityExpressionExtractor.ValidateTemplate(
                 text,
                 JObject.Parse(SampleJson));
+
+            var json = JObject.Parse(SampleJson);
+            var jtoken = (JToken)json;
+            var x = jtoken["abcd"];
         }
 
         [TestMethod]
         public void ExtractorTest2()
         {
-            var file = new FileInfo("C:\\Dantte\\Dev\\Repos\\Test-Files\\template.html");
-            using var reader = new StreamReader(file.OpenRead());
-            var text = reader.ReadToEnd();
+            var templateStream = typeof(MiscTests).Assembly.GetManifestResourceStream(
+                "CodilityTests.Utils.test-template2.t");
+            using var reader = new StreamReader(templateStream);
+            var templateText = reader.ReadToEnd();
             var expressions = VelocityExpressionExtractor
-                .ExtractExpressions(text)
+                .ExtractExpressions(templateText)
                 .Distinct()
                 .ToList();
+            //expressions.ForEach(Console.WriteLine);
 
-            expressions.ForEach(Console.WriteLine);
+            var jsonStream = typeof(MiscTests).Assembly.GetManifestResourceStream(
+                "CodilityTests.Utils.test-data.json");
+            using var jsonReader = new StreamReader(jsonStream);
+            var jsonText = jsonReader.ReadToEnd();
+            var json = JObject.Parse(jsonText);
+            var errors = VelocityExpressionExtractor
+                .ValidateTemplate(templateText, (JObject)json["data"])
+                .ToList();
+
+            errors.ForEach(err => Console.WriteLine($"{err.Item1}\n\n{err.Item2}\n\n\n\n\n"));
         }
 
         [TestMethod]
