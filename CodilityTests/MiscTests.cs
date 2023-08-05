@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using CodilityTests.Utils;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +24,40 @@ namespace CodilityTests
             var file = new FileInfo("C:\\Dantte\\Dev\\Repos\\Test-Files\\template.html");
             using var reader = new StreamReader(file.OpenRead());
             var text = reader.ReadToEnd();
+        }
 
+        [TestMethod]
+        public void GrammarTest()
+        {
+            var g = GrammarUtil.Grammar;
+
+        }
+
+        [TestMethod]
+        public void ExtractorTest()
+        {
+            using var stream = typeof(MiscTests).Assembly.GetManifestResourceStream(
+                "CodilityTests.Utils.test-template.txt");
+            using var reader = new StreamReader(stream);
+            var text = reader.ReadToEnd();
+            var expressions = VelocityExpressionExtractor.ExtractExpressions(text);
+            Assert.AreEqual(3, expressions.Length);
+
+            var errors = VelocityExpressionExtractor.ValidateTemplate(
+                text,
+                JObject.Parse(SampleJson));
+        }
+
+        [TestMethod]
+        public void ExtractorTest2()
+        {
+            var file = new FileInfo("C:\\Dantte\\Dev\\Repos\\Test-Files\\template.html");
+            using var reader = new StreamReader(file.OpenRead());
+            var text = reader.ReadToEnd();
+            var expressions = VelocityExpressionExtractor
+                .ExtractExpressions(text)
+                .Distinct()
+                .ToList();
         }
 
         [TestMethod]
@@ -104,7 +139,14 @@ namespace CodilityTests
                 return values[0].Key + values[values.Length - 1].Key;
         }
 
-       
+
+        private static readonly string SampleJson = @"{
+    ""abcd"": 56,
+    ""efgh"": {
+        ""me"": ""you""
+    },
+    ""fd"": [true, false, false]
+}";
     }
 
     public class Person

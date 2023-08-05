@@ -7,12 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Utils\test-template.txt" />
+    <None Remove="Utils\VelocityExpressionGrammar.xbnf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Utils\test-template.txt" />
+    <EmbeddedResource Include="Utils\VelocityExpressionGrammar.xbnf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Axis.Pulsar.Grammar" Version="0.7.18" />
     <PackageReference Include="Axis.Pulsar.Languages" Version="0.7.18" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.3" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.3" />
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

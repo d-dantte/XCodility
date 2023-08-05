@@ -4,4 +4,25 @@
 #
 
 # Expression
-$expression -> +[$root-accessor ?[$get-property-accessor $dot-property-accessor $indexer].* EOF]
+$expression -> +[$root-accessor ?[$get-accessor $dot-accessor $indexer].*]
+
+# Root Accessor
+$root-accessor -> +['$' $identifier]
+
+# Get Accessor
+$get-accessor -> +[
+	'.' $whitespace.* 'get' $whitespace.* 
+	'(' $whitespace.* $string-identifier $whitespace.* ')']
+
+# Dot Accessor
+$dot-accessor -> +['.' $whitespace.* $identifier]
+
+# Indexer
+$indexer -> +['[' $whitespace.* $index $whitespace.* ']']
+$index -> ?[$integer $string-identifier $expression]
+
+# Misc
+$string-identifier -> +['"' $identifier '"']
+$identifier -> /^[a-zA-Z_][a-zA-Z0-9_]*\z/
+$integer -> /^\d+\z/
+$whitespace -> ?[' ' '\t' '\n' '\r']
