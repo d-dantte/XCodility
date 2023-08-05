@@ -9,11 +9,15 @@
   <ItemGroup>
     <None Remove="Utils\test-template.txt" />
     <None Remove="Utils\VelocityExpressionGrammar.xbnf" />
+    <None Remove="Utils\test-template2.t" />
+    <None Remove="Utils\test-data.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Utils\test-template.txt" />
     <EmbeddedResource Include="Utils\VelocityExpressionGrammar.xbnf" />
+    <EmbeddedResource Include="Utils\test-template2.t" />
+    <EmbeddedResource Include="Utils\test-data.json" />
   </ItemGroup>
 
   <ItemGroup>
